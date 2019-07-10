@@ -985,9 +985,9 @@ static int connect_qp(struct resources *res)
                 goto connect_qp_exit;
         }
 
-	/* modify the QP of client to RTS */ 
-//        if (config.server_name)
-//	{
+	/* modify the QP of server to RTS */ 
+        if (!config.server_name)
+	{
 		rc = modify_qp_to_rts(res->qp);
 	        if (rc)
 	        {
@@ -995,7 +995,7 @@ static int connect_qp(struct resources *res)
 	                goto connect_qp_exit;
 	        }
 		fprintf(stdout, "QP state was change to RTS\n");
-//	}
+	}
 
         /* sync to make sure that both sides are in states that they can connect to prevent packet loose */
         if (sock_sync_data(res->sock, 1, "Q", &temp_char)) /* just send a dummy char back and forth */
